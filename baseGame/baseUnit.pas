@@ -63,8 +63,8 @@ Begin
     WriteLn(hideW);
     WriteLn('');
     Write('write a letter: ');
-    // findLetter(w, key, hideW);
-    // Write(showWord(hideW));
+    findLetter(w, key, hideW);
+    Write(showWord(hideW));
     ReadLn(key);
   Until key = '1';
 End;
