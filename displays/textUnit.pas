@@ -8,6 +8,7 @@ Uses crt;
 
 Procedure PrintWave();
 Procedure PrintWave2();
+Procedure printThanks();
 
 Implementation
 
@@ -121,5 +122,26 @@ Begin
     WriteLn(face[j]);
 End;
 
-
+Procedure printThanks();
+Begin
+  textcolor(green);
+  clrscr;
+  writeln('  TTTTT  H   H   A   N   N  K   K  SSSS!');
+  writeln('    T    H   H  A A  NN  N  K  K  S     ');
+  writeln('    T    HHHHH AAAAA N N N  KKK   SSSS  ');
+  writeln('    T    H   H A   A N  NN  K  K      S ');
+  writeln('    T    H   H A   A N   N  K   K  SSSS!');
+  WriteLn(' ');
+  writeln('  FFFFF  OOO   RRRR!');
+  writeln('  F     O   O  R   R');
+  writeln('  FFFF  O   O  RRRR ');
+  writeln('  F     O   O  R R  ');
+  writeln('  F      OOO   R  R!');
+  WriteLn(' ');
+  writeln('  PPPP   L      A   Y   Y  IIIII  N   N   GGGG');
+  writeln('  P   P  L     A A   Y Y     I    NN  N  G    ');
+  writeln('  PPPP   L    AAAAA   Y      I    N N N  G  GG');
+  writeln('  P      L    A   A   Y      I    N  NN  G   G');
+  writeln('  P      LLLLL A   A   Y   IIIII  N   N   GGGG');
+End;
 End.
