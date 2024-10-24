@@ -3,7 +3,9 @@ Unit baseUnit;
 
 Interface
 
-Uses crt, SysUtils;
+{$unitpath ../displays}
+
+Uses crt, SysUtils, textUnit, interactionUnit;
 
 Procedure initWord(w: String);
 
@@ -30,95 +32,39 @@ Begin
     End;
 End;
 
-Function hangPeople(errorCount: byte): string;
+Function missingLetters(notLetters: String): string;
+
+Var i: byte;
 Begin
-  Case errorCount Of 
-    0:
-       Begin
-         WriteLn('--------');
-         WriteLn('|      |');
-         WriteLn('|       ');
-         WriteLn('|       ');
-         WriteLn('|       ');
-         WriteLn('|       ');
-         WriteLn('|       ');
-       End;
-    1:
-       Begin
-         WriteLn('--------');
-         WriteLn('|      |');
-         WriteLn('|      O');
-         WriteLn('|       ');
-         WriteLn('|       ');
-         WriteLn('|       ');
-         WriteLn('|       ');
-       End;
-    2:
-       Begin
-         WriteLn('--------');
-         WriteLn('|      |');
-         WriteLn('|      O');
-         WriteLn('|      |');
-         WriteLn('|       ');
-         WriteLn('|       ');
-         WriteLn('|       ');
-       End;
-    3:
-       Begin
-         WriteLn('--------');
-         WriteLn('|      |');
-         WriteLn('|      O');
-         WriteLn('|     /|');
-         WriteLn('|       ');
-         WriteLn('|       ');
-         WriteLn('|       ');
-       End;
-    4:
-       Begin
-         WriteLn('--------');
-         WriteLn('|      |');
-         WriteLn('|      O');
-         WriteLn('|     /|\');
-         WriteLn('|       ');
-         WriteLn('|       ');
-         WriteLn('|       ');
-       End;
-    5:
-       Begin
-         WriteLn('--------');
-         WriteLn('|      |');
-         WriteLn('|      O');
-         WriteLn('|     /|\');
-         WriteLn('|     / ');
-         WriteLn('|       ');
-         WriteLn('|       ');
-       End;
-    6:
-       Begin
-         WriteLn('--------');
-         WriteLn('|      |');
-         WriteLn('|      O');
-         WriteLn('|     /|\');
-         WriteLn('|     / \');
-         WriteLn('|       ');
-         WriteLn('|       ');
-       End;
-  End;
+  Write('Missing letters: ');
+  For i:= 1 To Length(notLetters) Do
+    Begin
+      textcolor(red);
+      Write(notLetters[i], ' ');
+    End;
+  WriteLn('');
+  textcolor(white);
 End;
 
-Procedure findLetter(w, l: String; Var hideW: String; Var errorCount: byte);
+Procedure findLetter(w, l: String; Var hideW, notLetters: String; Var errorCount
+                     : byte);
 
 Var i: byte;
   positions: string;
+  isLetter: boolean;
 Begin
   positions := '';
+  isLetter := false;
   For i:= 1 To length(w) Do
     Begin
       If w[i] = l Then
         Begin
+          isLetter := true;
           positions := positions + ' ' + inttostr(i);
         End;
     End;
+  If (Not isLetter) Then
+    notLetters := notLetters + l;
   If (length(positions) > 0) Then
     Begin
       For i:= 1 To length(positions) Do
@@ -131,15 +77,28 @@ Begin
     Inc(errorCount);
 End;
 
+Procedure exitGame(Var key: String; text: String; color: byte);
+Begin
+  key := '1';
+  Case color Of 
+    1: textcolor(red);
+    2: textcolor(green);
+  End;
+  WriteLn('');
+  Writeln(text);
+  readkey;
+End;
+
 Procedure initWord(w: String);
 
-Var key, hideW: string;
+Var key, hideW, notLetters: string;
   errorCount: byte;
 Begin
   textcolor(white);
   SetLength(hideW, Length(w));
   init(hideW, Length(w));
   errorCount := 0;
+  notLetters := '';
   Repeat
     WriteLn(hangPeople(errorCount));
     gotoxy(15, 5);
@@ -147,50 +106,46 @@ Begin
     WriteLn(' ');
     WriteLn('Errors: ', errorCount, ' of 6');
     WriteLn('');
-    Write('write a letter (type 1 to escape): ');
-    ReadLn(key);
-    findLetter(w, key, hideW, errorCount);
+    WriteLn(missingLetters(notLetters));
     If (errorCount = 6) Then
-      key := '1';
+      exitGame(key, 'Something went wrong...', 1)
+      // Begin
+      //   key := '1';
+      //   textcolor(red);
+      //   WriteLn('');
+      //   Writeln('Something went wrong...');
+      //   readkey;
+      // End
+    Else If (hideW = w) Then
+           exitGame(key, 'Congratulations!...', 2)
+           //  Begin
+           //    key := '1';
+           //    textcolor(green);
+           //    WriteLn('');
+           //    Writeln('Congratulations!...');
+           //    readkey;
+           //  End
+    Else
+      Begin
+        Write('write a letter (type 1 to escape): ');
+        textcolor(green);
+        ReadLn(key);
+        textcolor(white);
+        findLetter(w, key, hideW, notLetters, errorCount);
+      End;
     clrscr;
   Until key = '1';
   If errorCount = 6 Then
     Begin
-      textcolor(red);
-      writeln(' Y   Y  OOO   U   U        L      OOO   SSSS  EEEEE!');
-      writeln('  Y Y  O   O  U   U        L     O   O S      E     ');
-      writeln('   Y   O   O  U   U        L     O   O  SSS   EEEE  ');
-      writeln('   Y   O   O  U   U        L     O   O     S  E     ');
-      writeln('   Y    OOO    UUU         LLLLL  OOO   SSSS  EEEEE!');
-      writeln;
-      writeln('    .-""""""-.');
-      writeln('  /  _    _   \');
-      writeln(' |  |o|  |o|   |');
-      writeln(' |   \____/    |');
-      writeln(' |      --     |');
-      writeln('  \   .----.  /');
-      writeln('   `-......-` ');
+      PrintWave2();
+    End;
+  If (hideW = w) Then
+    Begin
+      textcolor(blue);
+      PrintWave();
     End;
   readkey;
-  textcolor(green);
-  clrscr;
-  writeln('  TTTTT  H   H   A   N   N  K   K  SSSS!');
-  writeln('    T    H   H  A A  NN  N  K  K  S     ');
-  writeln('    T    HHHHH AAAAA N N N  KKK   SSSS  ');
-  writeln('    T    H   H A   A N  NN  K  K      S ');
-  writeln('    T    H   H A   A N   N  K   K  SSSS!');
-  WriteLn(' ');
-  writeln('  FFFFF  OOO   RRRR!');
-  writeln('  F     O   O  R   R');
-  writeln('  FFFF  O   O  RRRR ');
-  writeln('  F     O   O  R R  ');
-  writeln('  F      OOO   R  R!');
-  WriteLn(' ');
-  writeln('  PPPP   L      A   Y   Y!');
-  writeln('  P   P  L     A A   Y Y  ');
-  writeln('  PPPP   L    AAAAA   Y    ');
-  writeln('  P      L    A   A   Y    ');
-  writeln('  P      LLLLL A   A   Y   ');
+  printThanks();
 End;
 
 End.
