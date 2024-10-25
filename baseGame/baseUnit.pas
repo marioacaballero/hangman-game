@@ -16,10 +16,9 @@ Function showWord(w: String): string;
 
 Var i: byte;
 Begin
-  showWord := '';
   For i:= 1 To length(w) Do
     Begin
-      showWord := showWord + w[i];
+      write(w[i], ' ');
     End;
 End;
 
@@ -46,7 +45,7 @@ Begin
   Repeat
     WriteLn(hangPeople(errorCount));
     gotoxy(15, 5);
-    WriteLn(hideW);
+    WriteLn(showWord(hideW));
     WriteLn(' ');
     WriteLn('Errors: ', errorCount, ' of 6');
     WriteLn('');
