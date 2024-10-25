@@ -77,18 +77,6 @@ Begin
     Inc(errorCount);
 End;
 
-Procedure exitGame(Var key: String; text: String; color: byte);
-Begin
-  key := '1';
-  Case color Of 
-    1: textcolor(red);
-    2: textcolor(green);
-  End;
-  WriteLn('');
-  Writeln(text);
-  readkey;
-End;
-
 Procedure initWord(w: String);
 
 Var key, hideW, notLetters: string;
@@ -109,22 +97,8 @@ Begin
     WriteLn(missingLetters(notLetters));
     If (errorCount = 6) Then
       exitGame(key, 'Something went wrong...', 1)
-      // Begin
-      //   key := '1';
-      //   textcolor(red);
-      //   WriteLn('');
-      //   Writeln('Something went wrong...');
-      //   readkey;
-      // End
     Else If (hideW = w) Then
            exitGame(key, 'Congratulations!...', 2)
-           //  Begin
-           //    key := '1';
-           //    textcolor(green);
-           //    WriteLn('');
-           //    Writeln('Congratulations!...');
-           //    readkey;
-           //  End
     Else
       Begin
         Write('write a letter (type 1 to escape): ');

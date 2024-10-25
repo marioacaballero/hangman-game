@@ -5,8 +5,22 @@ Unit interactionUnit;
 Interface
 
 Function hangPeople(errorCount: byte): string;
+Procedure exitGame(Var key: String; text: String; color: byte);
+
 
 Implementation
+
+Procedure exitGame(Var key: String; text: String; color: byte);
+Begin
+  key := '1';
+  Case color Of 
+    1: textcolor(red);
+    2: textcolor(green);
+  End;
+  WriteLn('');
+  Writeln(text);
+  readkey;
+End;
 
 Function hangPeople(errorCount: byte): string;
 Begin
