@@ -38,14 +38,14 @@ Begin
   isLetter := false;
   For i:= 1 To length(w) Do
     Begin
-      If w[i] = l Then
+      If w[i] = upcase(l) Then
         Begin
           isLetter := true;
           positions := positions + ' ' + inttostr(i);
         End;
     End;
   If (Not isLetter) Then
-    notLetters := notLetters + l;
+    notLetters := notLetters + upcase(l);
   If (length(positions) > 0) Then
     Begin
       For i:= 1 To length(positions) Do

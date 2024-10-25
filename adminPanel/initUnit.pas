@@ -23,10 +23,13 @@ Begin
 End;
 
 Procedure initWord(Var w: String);
+
+Var wordRead: String;
 Begin
   Write('Enter the word to configuration de game: ');
   textcolor(white);
-  ReadLn(w);
+  ReadLn(wordRead);
+  w := upcase(wordRead);
   textcolor(lightgreen);
   WriteLn('');
   WriteLn('The word has been configured, press any key to back...');
