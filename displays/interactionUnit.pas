@@ -4,6 +4,8 @@ Unit interactionUnit;
 
 Interface
 
+Uses crt;
+
 Function hangPeople(errorCount: byte): string;
 Procedure exitGame(Var key: String; text: String; color: byte);
 

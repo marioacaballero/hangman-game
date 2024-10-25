@@ -3,9 +3,10 @@ Unit baseUnit;
 
 Interface
 
-{$unitpath ../displays}
+{$unitpath ../displays/}
+{$unitpath ./}
 
-Uses crt, SysUtils, textUnit, interactionUnit;
+Uses crt, textUnit, interactionUnit, utilsUnit;
 
 Procedure initWord(w: String);
 
@@ -30,51 +31,6 @@ Begin
     Begin
       w[i] := '_';
     End;
-End;
-
-Function missingLetters(notLetters: String): string;
-
-Var i: byte;
-Begin
-  Write('Missing letters: ');
-  For i:= 1 To Length(notLetters) Do
-    Begin
-      textcolor(red);
-      Write(notLetters[i], ' ');
-    End;
-  WriteLn('');
-  textcolor(white);
-End;
-
-Procedure findLetter(w, l: String; Var hideW, notLetters: String; Var errorCount
-                     : byte);
-
-Var i: byte;
-  positions: string;
-  isLetter: boolean;
-Begin
-  positions := '';
-  isLetter := false;
-  For i:= 1 To length(w) Do
-    Begin
-      If w[i] = l Then
-        Begin
-          isLetter := true;
-          positions := positions + ' ' + inttostr(i);
-        End;
-    End;
-  If (Not isLetter) Then
-    notLetters := notLetters + l;
-  If (length(positions) > 0) Then
-    Begin
-      For i:= 1 To length(positions) Do
-        Begin
-          If (positions[i] <> ' ') Then
-            hideW[strtoint(positions[i])] := w[strtoint(positions[i])];
-        End;
-    End
-  Else
-    Inc(errorCount);
 End;
 
 Procedure initWord(w: String);
