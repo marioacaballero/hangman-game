@@ -27,10 +27,6 @@ Begin
   textcolor(white);
 End;
 
-
-
-
-
 // Procedure findLetter(w, l: String; Var hideW, notLetters: String; Var errorCount
 //                      : byte);
 
