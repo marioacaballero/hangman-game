@@ -60,7 +60,8 @@ Begin
         textcolor(green);
         ReadLn(key);
         textcolor(white);
-        findLetter(w, key, hideW, notLetters, errorCount);
+        If (key <> '') Then
+          findLetter(w, key, hideW, notLetters, errorCount);
       End;
     clrscr;
   Until key = '1';
