@@ -71,7 +71,6 @@ Begin
     End;
   If (hideW = w) Then
     Begin
-      textcolor(blue);
       PrintWave();
     End;
   readkey;

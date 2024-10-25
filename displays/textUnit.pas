@@ -18,6 +18,7 @@ Var
   text: array[1..11] Of string;
   i, j: integer;
 Begin
+  textcolor(blue);
   text[1] := '  Y   Y  OOO   U   U        W   W  OOO  N   N!';
   text[2] := '   Y Y  O   O  U   U        W   W O   O NN  N ';
   text[3] := '    Y   O   O  U   U        W W W O   O N N N ';
@@ -70,6 +71,7 @@ Var
   face: array[1..7] Of string;
   i, j: integer;
 Begin
+  textcolor(red);
   text[1] := ' Y   Y  OOO   U   U        L      OOO   SSSS  EEEEE!';
   text[2] := '  Y Y  O   O  U   U        L     O   O S      E     ';
   text[3] := '   Y   O   O  U   U        L     O   O  SSS   EEEE  ';
