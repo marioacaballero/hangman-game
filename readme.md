@@ -44,3 +44,5 @@ En el caso de que la letra no se encuentre incrementa el contador de errores y m
 ![alt text](./images/image-5.png)
 
 Cuando el juega llega a 6 errores, palabra completa de manera correcta o se corte la ejecución al ingresar un 1, el programa finaliza y puede volver a comenzar.
+
+![alt text](./images/image-6.png)
